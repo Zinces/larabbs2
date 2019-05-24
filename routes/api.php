@@ -32,6 +32,9 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api','middleware'=>['seri
         // 登录
         $api->post('authorizations', 'AuthorizationsController@store')
             ->name('api.authorizations.store');
+        // 小程序登录
+        $api->post('weapp/authorizations', 'AuthorizationsController@weappStore')
+            ->name('api.weapp.authorizations.store');
         // 获取分类列表
         $api->get('categories', 'CategoriesController@index')
             ->name('api.categories.index');

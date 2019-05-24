@@ -7,13 +7,14 @@ use App\Observers\LinkObserver;
 use Carbon\Carbon;
 use Dingo\Api\Facade\API;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
+    /**ValidationHttpException
      * Register any application services.
      *
-     * @return void
+     * @return void Unprocessable Entity
      */
     public function register()
     {
@@ -21,12 +22,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
         }
         API::error(function  (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException  $exception)  {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(404,  '404 Not Found');
+            throw new HttpException(404,  '404 Not Found',null,[],80001);
         });
         API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
-//            abort(403, $exception->getMessage());
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403,  '没有权限');
-//            throw new \Exception('没有权限',80001);
+            throw new HttpException(403,  '没有权限',null,[],80001);
         });
     }
 
