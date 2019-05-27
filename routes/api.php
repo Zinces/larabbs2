@@ -21,6 +21,7 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api','middleware'=>['seri
         'limit' => config('api.rate_limits.sign.limit'),
         'expires' => config('api.rate_limits.sign.expires')
     ], function($api) {
+        // 验证图片验证码
         $api->post('verificationCodes', 'VerificationCodesController@store')
             ->name('api.verificationCodes.store');
         $api->post('users', 'UsersController@store')->name('api.users.store');
@@ -35,6 +36,9 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api','middleware'=>['seri
         // 小程序登录
         $api->post('weapp/authorizations', 'AuthorizationsController@weappStore')
             ->name('api.weapp.authorizations.store');
+        // 小程序注册
+        $api->post('weapp/users', 'UsersController@weappStore')
+            ->name('api.weapp.users.store');
         // 获取分类列表
         $api->get('categories', 'CategoriesController@index')
             ->name('api.categories.index');

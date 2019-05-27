@@ -123,7 +123,7 @@ class AuthorizationsController extends Controller
 
         // 如果结果错误，说明 code 已过期或不正确，返回 401 错误
         if (isset($data['errcode'])){
-            return $this->error('code不正确或者已过期');
+            return $this->response->errorUnauthorized('code不正确或者已过期');
         }
         // 找到 openid 对应的用户
         $user = User::where('weapp_openid', $data['openid'])->first();
@@ -134,7 +134,7 @@ class AuthorizationsController extends Controller
         if (!$user) {
             // 如果未提交用户名密码，403 错误提示
             if (!$request->username) {
-                return $this->error('用户不存在');
+                return $this->response->errorForbidden('用户不存在');
             }
 
             $username = $request->username;
@@ -148,7 +148,7 @@ class AuthorizationsController extends Controller
 
             // 验证用户名和密码是否正确
             if (!Auth::guard('api')->once($credentials)) {
-                return $this->error('用户名或密码错误');
+                return $this->response->errorUnauthorized('用户名或密码错误');
             }
 
             // 获取对应的用户

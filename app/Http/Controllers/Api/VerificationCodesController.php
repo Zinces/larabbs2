@@ -18,7 +18,7 @@ class VerificationCodesController extends Controller
         }
         if (!hash_equals($captchaData['code'],$request->captcha_code)){
             Cache::forget($request->captcha_key);
-            return $this->response->error('图形验证码错误',422);
+            return $this->response->errorUnauthorized('图形验证码错误');
         }
 
         $code = str_pad(mt_rand(1,9999),4,0,STR_PAD_LEFT);
