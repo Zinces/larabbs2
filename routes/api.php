@@ -57,6 +57,9 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api','middleware'=>['seri
         // 活跃用户
         $api->get('actived/users', 'UsersController@activedIndex')
             ->name('api.actived.users.index');
+        // 用户详情
+        $api->get('users/{user}', 'UsersController@show')
+            ->name('api.users.show');
     });
     $api->group([
         'middleware' => ['api.throttle','api.auth'],

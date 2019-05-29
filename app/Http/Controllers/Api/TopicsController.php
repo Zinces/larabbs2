@@ -29,7 +29,7 @@ class TopicsController extends Controller
                 break;
         }
 
-        $topics = $query->paginate(20);
+        $topics = $query->paginate(10);
 
         return $this->response->paginator($topics, new TopicTransformer());
     }
