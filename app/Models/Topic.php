@@ -21,6 +21,11 @@ class Topic extends Model
         return $this->hasMany(Reply::class);
     }
 
+    public function topReplies()
+    {
+        return $this->replies()->orderBy('created_at','desc')->limit(5);
+    }
+
     public function scopeWithOrder($query,$order)
     {
         switch ($order){

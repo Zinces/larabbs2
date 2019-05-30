@@ -60,6 +60,12 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api','middleware'=>['seri
         // 用户详情
         $api->get('users/{user}', 'UsersController@show')
             ->name('api.users.show');
+        // 话题回复列表
+        $api->get('topics/{topic}/replies', 'RepliesController@index')
+            ->name('api.topics.replies.index');
+        // 某个用户的回复列表
+        $api->get('users/{user}/replies', 'RepliesController@userIndex')
+            ->name('api.users.replies.index');
     });
     $api->group([
         'middleware' => ['api.throttle','api.auth'],
@@ -99,12 +105,6 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api','middleware'=>['seri
         // 删除回复
         $api->delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
             ->name('api.topics.replies.destroy');
-        // 话题回复列表
-        $api->get('topics/{topic}/replies', 'RepliesController@index')
-            ->name('api.topics.replies.index');
-        // 某个用户的回复列表
-        $api->get('users/{user}/replies', 'RepliesController@userIndex')
-            ->name('api.users.replies.index');
         // 通知列表
         $api->get('user/notifications', 'NotificationsController@index')
             ->name('api.user.notifications.index');
@@ -114,6 +114,8 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api','middleware'=>['seri
         // 标记消息通知为已读
         $api->patch('user/read/notifications/{notification?}', 'NotificationsController@read')
             ->name('api.user.notifications.read');
+        $api->put('user/read/notifications', 'NotificationsController@read')
+            ->name('api.user.notifications.read.put');
         // 当前登录用户权限
         $api->get('user/permissions', 'PermissionsController@index')
             ->name('api.user.permissions.index');
